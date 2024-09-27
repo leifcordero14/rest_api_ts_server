@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Product from "../models/Product";
 
-class ProductHandler {
-	public async getProducts(req: Request, res: Response) {
+export default class ProductHandler {
+	static async getProducts(req: Request, res: Response) {
 		try {
 			const products = await Product.findAll({
 				attributes: { exclude: ["createdAt", "updatedAt"] },
@@ -15,7 +15,7 @@ class ProductHandler {
 		}
 	}
 
-	public async getProductById(req: Request, res: Response) {
+	static async getProductById(req: Request, res: Response) {
 		try {
 			const product = await Product.findByPk(req.params.id, {
 				attributes: { exclude: ["createdAt", "updatedAt"] }
@@ -30,7 +30,7 @@ class ProductHandler {
 		}
 	}
 
-	public async createProduct(req: Request, res: Response) {
+	static async createProduct(req: Request, res: Response) {
 		try {
 			const newProduct = await Product.create(req.body);
 			return res.status(201).json({ data: newProduct });
@@ -40,7 +40,7 @@ class ProductHandler {
 		}
 	}
 
-	public async updateProduct(req: Request, res: Response) {
+	static async updateProduct(req: Request, res: Response) {
 		try {
 			const product = await Product.findByPk(req.params.id);
 			if (!product) {
@@ -54,7 +54,7 @@ class ProductHandler {
 		}
 	}
 
-	public async updateAvailability(req: Request, res: Response) {
+	static async updateAvailability(req: Request, res: Response) {
 		try {
 			const product = await Product.findByPk(req.params.id);
 			if (!product) {
@@ -71,7 +71,7 @@ class ProductHandler {
 		}
 	}
 
-	public async deleteProduct(req: Request, res: Response) {
+	static async deleteProduct(req: Request, res: Response) {
 		try {
 			const product = await Product.findByPk(req.params.id);
 			if (!product) {
@@ -85,5 +85,3 @@ class ProductHandler {
 		}
 	}
 }
-
-export default new ProductHandler();

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import productHandler from "./handlers/products";
+import ProductHandler from "./handlers/ProductHandler";
 import { handleInputError, handleInvalidParam } from "./middleware";
 
 const router = Router();
@@ -79,9 +79,10 @@ const router = Router();
  *      400:
  *        description: Bad request - Invalid input data
  */
-router.route("/")
-  .get(productHandler.getProducts)
-  .post(handleInputError, productHandler.createProduct);
+router
+	.route("/")
+	.get(ProductHandler.getProducts)
+	.post(handleInputError, ProductHandler.createProduct);
 
 /**
  * @swagger
@@ -214,10 +215,11 @@ router.route("/")
  *      404:
  *        description: Product not found
  */
-router.route("/:id")
-  .get(handleInvalidParam, productHandler.getProductById)
-  .put(handleInvalidParam, handleInputError, productHandler.updateProduct)
-  .patch(handleInvalidParam, productHandler.updateAvailability)
-  .delete(handleInvalidParam, productHandler.deleteProduct);
+router
+	.route("/:id")
+	.get(handleInvalidParam, ProductHandler.getProductById)
+	.put(handleInvalidParam, handleInputError, ProductHandler.updateProduct)
+	.patch(handleInvalidParam, ProductHandler.updateAvailability)
+	.delete(handleInvalidParam, ProductHandler.deleteProduct);
 
 export default router;
